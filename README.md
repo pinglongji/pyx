@@ -24,7 +24,7 @@ go install pyx.go
 
 Dockerfile的打包逻辑是使用基础镜像centos:7，首先安装了V3.6.8版本的python，并将python可执行文件的路径添加到PATH环境变量中，并使用pip安装了pip-download，并将/build作为工作目录。镜像被作为容器启动时，会执行如下的命令：
 
-（1）在当前项目目录下创建./build/stable目录，并删除./build/stable目录下除了libs目录以外的所有文件。
+（1）在当前项目目录下创建./build/stable目录。
 
 （2）使用pip-download将当前项目目录下的requirements.txt中的依赖下载到./build/stable/libs目录下。
 
@@ -32,7 +32,7 @@ Dockerfile的打包逻辑是使用基础镜像centos:7，首先安装了V3.6.8�
 
 （4）将容器中/private-cache目录中的所有文件拷贝到./build/stable/目录下。
 
-（5）将./build/stable目录压缩成./build/stable.tar。
+（5）将./build/stable目录压缩成./build/stable.tar，并删除./build/stable目录下除了libs目录以外的所有文件。
 
 （6）判断USE_CXPKG变量的值是否等于1，如果等于1的话，则执行后续的打包，否则打包结束。
 

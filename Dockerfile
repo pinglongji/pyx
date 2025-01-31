@@ -17,7 +17,6 @@ RUN source /etc/profile && pip3 install pip -U && pip3 install pip-download
 WORKDIR /build
 CMD source /etc/profile \
     && mkdir -p ./build/stable && rm -rf ./build/stable.tar \
-    && find ./build/stable/ -mindepth 1 -maxdepth 1 -not -name 'libs' -exec rm -rf {} \; \
     && pip-download -i https://mirrors.aliyun.com/pypi/simple/ -r requirements.txt -d ./build/stable/libs \
     && echo "copying source code in current directory to ./build/stable/ ..." \
     && find . -mindepth 1 -maxdepth 1 -not -name 'build' -exec cp -r {} ./build/stable/ \; \
@@ -25,6 +24,7 @@ CMD source /etc/profile \
     && ([ "$(ls -A /private-cache)" ] && cp -r /private-cache/* ./build/stable/) \
     && echo "starting compress ./build/stable.tar ..." \
     && cd ./build && tar -cf stable.tar stable && cd .. \
+    && find ./build/stable/ -mindepth 1 -maxdepth 1 -not -name 'libs' -exec rm -rf {} \; \
     && echo "package source code successfully!" \
     && [ "$USE_CXPKG" -eq 1 ] \
     && python3 -m venv /deps-cache/pyx \
