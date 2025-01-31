@@ -31,7 +31,7 @@ CMD source /etc/profile \
     && pip install pip -U && pip install cx_Freeze \
     && pip install -r requirements.txt --no-index --find-links=./build/stable/libs \
     && python setup.py build \
-    && cd ./build && && rm -rf exe.linux-x86_64-3.6.tar \
+    && cd ./build && rm -rf exe.linux-x86_64-3.6.tar \
     && tar -cf exe.linux-x86_64-3.6.tar exe.linux-x86_64-3.6 \
     && echo "package successfully!"
 
