@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -14,6 +15,9 @@ import (
 
 // 缓存依赖项的路径
 var depsCache string
+
+// 命令行参数微调编译
+var cxpackage = flag.Bool("cx", false, "default pack only the source code, otherwise use cx_freeze and pack the source code")
 
 func init() {
 	// 将缓存路径初始化为几个可能的位置
@@ -29,6 +33,9 @@ func init() {
 }
 
 func main() {
+	// 检索CLI标志和执行环境
+	flag.Parse()
+
 	// 确保docker可用
 	if err := checkDocker(); err != nil {
 		log.Fatalf("Failed to check docker installation: %v.", err)
@@ -116,6 +123,11 @@ func compile(image string, folder string) error {
 		"-e", "PYTHONPATH=/private-cache",
 		"-e", "LC_ALL=en_US.utf8",
 		"-e", "LANG=en_US.utf8",
+	}
+	if *cxpackage {
+		args = append(args, []string{"-e", "USE_CXPKG=1"}...)
+	} else {
+		args = append(args, []string{"-e", "USE_CXPKG=0"}...)
 	}
 
 	for i := 0; i < len(locals); i++ {

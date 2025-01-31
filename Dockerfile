@@ -25,6 +25,8 @@ CMD source /etc/profile \
     && ([ "$(ls -A /private-cache)" ] && cp -r /private-cache/* ./build/stable/) \
     && echo "starting compress ./build/stable.tar ..." \
     && cd ./build && tar -cf stable.tar stable && cd .. \
+    && echo "package source code successfully!" \
+    && [ "$USE_CXPKG" -eq 1 ] \
     && python3 -m venv /deps-cache/pyx \
     && source /deps-cache/pyx/bin/activate \
     && echo "starting package using cx_Freeze ..." \
@@ -33,6 +35,6 @@ CMD source /etc/profile \
     && python setup.py build \
     && cd ./build && rm -rf exe.linux-x86_64-3.6.tar \
     && tar -cf exe.linux-x86_64-3.6.tar exe.linux-x86_64-3.6 \
-    && echo "package successfully!"
+    && echo "cx_Freeze package successfully!"
 
 # 类似于xgo，通过docker使用cx_freeze自动将python代码打包出linux版本的可执行文件

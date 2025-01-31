@@ -34,15 +34,17 @@ Dockerfile的打包逻辑是使用基础镜像centos:7，首先安装了V3.6.8�
 
 （5）将./build/stable目录压缩成./build/stable.tar。
 
-（6）在容器中的/deps-cache/目录下中创建venv虚拟环境，名称为pyx。
+（6）判断USE_CXPKG变量的值是否等于1，如果等于1的话，则执行后续的打包，否则打包结束。
 
-（7）激活activate虚拟环境，并在虚拟环境中安装cx_Freeze。
+（7）在容器中的/deps-cache/目录下中创建venv虚拟环境，名称为pyx。
 
-（8）在虚拟环境中安装requirements.txt中的所有依赖。
+（8）激活activate虚拟环境，并在虚拟环境中安装cx_Freeze。
 
-（9）使用python setup.py build命令打包可执行文件。
+（9）在虚拟环境中安装requirements.txt中的所有依赖。
 
-（10）将打包后的./build/exe.linux-x86_64-3.6目录，压缩为./build/exe.linux-x86_64-3.6.tar文件。
+（10）使用python setup.py build命令打包可执行文件。
+
+（11）将打包后的./build/exe.linux-x86_64-3.6目录，压缩为./build/exe.linux-x86_64-3.6.tar文件。
 
 
 
@@ -88,12 +90,20 @@ PS：如果没有创建deps.txt文件也没关系，打包能够正常执行。
 
 3、打开命令行终端，进入到你的项目目录下执行打包命令
 
+只打包源码
+
 ```
 pyx
 ```
 
+打包源码并使用cx_Freeze打包可执行文件
+
+```
+pyx -cx
+```
 
 
-Yes，打包就是如此简单，只需要执行pyx即可，无任何参数。
+
+Yes，打包就是如此简单。
 
 最后，如果你使用它，且Star一下吧，非常感谢！
