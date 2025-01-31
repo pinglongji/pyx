@@ -35,4 +35,4 @@ CMD source /etc/profile \
     && tar -cf exe.linux-x86_64-3.6.tar exe.linux-x86_64-3.6 \
     && echo "package successfully!"
 
-# 类似于xgo通过docker使用cx_freeze自动给python代码打包linux版本的可执行文件
+# 类似于xgo，通过docker使用cx_freeze自动将python代码打包出linux版本的可执行文件
