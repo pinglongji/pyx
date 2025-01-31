@@ -65,6 +65,23 @@ docker build -t x86_64_pyx .
 
 1、首先遵循cx_Freeze打包的要求，在你的项目目录下创建setup.py文件。
 
+例如：
+
+```
+from cx_Freeze import setup, Executable
+
+build_exe_options = {"excludes": ["tkinter", "test"]}
+
+setup(
+    name="umaptoolanalysis",
+    version="0.1", description="My Python Application",
+    executables=[Executable("main.py", targetName="umaptoolanalysis")],
+    options={
+        "build_exe": build_exe_options
+    },
+)
+```
+
 2、在你的项目目录下创建一个deps.txt文件，将你的本地公共代码的路径添加到里面。
 
 PS：如果没有创建deps.txt文件也没关系，打包能够正常执行。
