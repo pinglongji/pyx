@@ -84,7 +84,7 @@ func checkDockerImage(image string) (bool, error) {
 func compile(image string, folder string) error {
 	locals, mounts := []string{}, []string{}
 	// 内部依赖包的位置
-	path := filepath.Join(folder, ".deps.txt")
+	path := filepath.Join(folder, "deps.txt")
 	if _, err := os.Stat(path); err != nil {
 		fmt.Printf("The deps.txt not exist in the %v, dependency is not loaded", folder)
 	} else {
